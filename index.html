@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideas Box Project - Portable Learning & Innovation Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #ec4899;
+            --accent-color: #f59e0b;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: #e2e8f0;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        body.dark-mode ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        button {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 4rem 0;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        body.dark-mode section h2 {
+            color: var(--secondary-color);
+        }
+
+        /* Goal Section */
+        .goal-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .goal-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .goal-text ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .goal-text li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .goal-text li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .goal-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: bounceIn 1s ease;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .goal-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .goal-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        body.dark-mode .card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        body.dark-mode .card h3 {
+            color: var(--secondary-color);
+        }
+
+        .card p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .card p {
+            color: #cbd5e1;
+        }
+
+        .card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Benefits Section */
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            min-width: 60px;
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .benefit-item:hover .benefit-icon {
+            animation: none;
+            transform: scale(1.2);
+        }
+
+        .benefit-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        body.dark-mode .benefit-text h4 {
+            color: var(--secondary-color);
+        }
+
+        /* Users Section */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .user-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .user-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        .user-card:hover {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .user-card:hover h4 {
+            color: white;
+        }
+
+        .user-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-card h4 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+
+        /* Example Section */
+        .example-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .timeline-item {
+            background: #1e293b;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-section button {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        body.dark-mode footer {
+            background: #0a0f1a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .goal-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                justify-content: center;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <nav>
+            <div class="logo">📦 Ideas Box</div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#goal">Goal</a></li>
+                <li><a href="#contents">Contents</a></li>
+                <li><a href="#users">Users</a></li>
+                <li><a href="#example">Example</a></li>
+                <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>🌍 Ideas Box Project</h1>
+        <p>A Portable Learning and Innovation Center for Communities Without Access to Education</p>
+        <div class="hero-buttons">
+            <button class="btn-primary" onclick="document.getElementById('about').scrollIntoView()">Learn More</button>
+            <button class="btn-primary"
+                onclick="window.open('file:///C:/Users/Nkurunziza%20Eric/Desktop/idea%20projects/join.html', '_blank')">
+                Get Involved
+            </button>
+            <button class="btn-secondary" onclick="document.getElementById('goal').scrollIntoView()">Discover Our Mission</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container fade-in">
+        <h2>About Ideas Box</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3>What It Is</h3>
+                <p>A portable learning and innovation center - think of it like a mobile library combined with a digital classroom and creativity space, all packed into boxes that can be set up anywhere.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Who It Helps</h3>
+                <p>Communities that don't have easy access to schools, libraries, or the internet. Perfect for refugee camps, rural areas, and emergency-affected communities.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💡</div>
+                <h3>The Vision</h3>
+                <p>To give people access to knowledge, education, and creativity anywhere in the world, breaking barriers to learning and innovation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Goal Section -->
+    <section id="goal" class="container fade-in">
+        <h2>🎯 Main Goal</h2>
+        <div class="goal-content">
+            <div class="goal-text">
+                <h3>Give People Access to Knowledge & Education Anywhere</h3>
+                <p>The Ideas Box helps communities that face barriers to education:</p>
+                <ul>
+                    <li>Refugee camps</li>
+                    <li>Rural areas with limited resources</li>
+                    <li>Poor or emergency-affected communities</li>
+                    <li>Schools with limited educational resources</li>
+                </ul>
+                <p>By providing tools, materials, and technology, Ideas Box empowers learning in places where opportunities are scarce.</p>
+            </div>
+            <div class="goal-box">
+                <h3>Why This Matters</h3>
+                <p>Education is a human right, not a privilege. Ideas Box bridges the gap between those who have access to knowledge and those who don't. It's not just about books and computers—it's about unlocking potential and building a better future for everyone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contents Section -->
+    <section id="contents" class="container fade-in">
+        <h2>📦 What's Inside an Ideas Box?</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3>Books & Learning Materials</h3>
+                <ul>
+                    <li>School textbooks</li>
+                    <li>Storybooks for children</li>
+                    <li>Reference books</li>
+                    <li>Learning guides</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">💻</div>
+                <h3>Digital Technology</h3>
+                <ul>
+                    <li>Laptops or tablets</li>
+                    <li>Offline digital library</li>
+                    <li>Wikipedia & Khan Academy</li>
+                    <li>Educational videos</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎧</div>
+                <h3>Multimedia Tools</h3>
+                <ul>
+                    <li>Headphones & speakers</li>
+                    <li>Educational videos</li>
+                    <li>Audio lessons</li>
+                    <li>Interactive content</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎨</div>
+                <h3>Creativity & Innovation</h3>
+                <ul>
+                    <li>Drawing materials</li>
+                    <li>Writing tools</li>
+                    <li>Games & puzzles</li>
+                    <li>Coding & robotics kits</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Functions Section -->
+    <section class="container fade-in">
+        <h2>🧠 What Does the Ideas Box Do?</h2>
+        <div class="benefits-list">
+            <div class="benefit-item">
+                <div class="benefit-icon">📖</div>
+                <div class="benefit-text">
+                    <h4>Learning</h4>
+                    <p>Reading, writing, and studying for all ages</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">💻</div>
+                <div class="benefit-text">
+                    <h4>Technology Access</h4>
+                    <p>Using computers and tablets safely and effectively</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🎓</div>
+                <div class="benefit-text">
+                    <h4>Education Improvement</h4>
+                    <p>Resources for students and teachers alike</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🎨</div>
+                <div class="benefit-text">
+                    <h4>Creativity</h4>
+                    <p>Art, ideas, and problem-solving opportunities</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🤝</div>
+                <div class="benefit-text">
+                    <h4>Community Building</h4>
+                    <p>Group learning, discussions, and shared spaces</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">✨</div>
+                <div class="benefit-text">
+                    <h4>Innovation</h4>
+                    <p>New ideas and creative thinking for the future</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who It Helps Section -->
+    <section id="users" class="container fade-in">
+        <h2>👥 Who Does It Help?</h2>
+        <div class="users-grid">
+            <div class="user-card">
+                <div class="user-icon">👧</div>
+                <h4>Children</h4>
+                <p>Learning to read, study, and explore new worlds</p>
+            </div>
+            <div class="user-card">
+                <div class="user-icon">🧑</div>
+                <h4>Youth</h4>
+                <p>Building skills, learning technology, and innovating</p>
+            </div>
+            <div class="user-card">
+                <div class="user-icon">👩‍🏫</div>
+                <h4>Teachers</h4>
+                <p>Access to teaching resources and tools</p>
+            </div>
+            <div class="user-card">
+                <div class="user-icon">👨‍👩‍👧</div>
+                <h4>Communities</h4>
+                <p>Creating shared learning and meeting spaces</p>
+            </div>
+            <div class="user-card">
+                <div class="user-icon">🧍</div>
+                <h4>Refugees</h4>
+                <p>Education and support during difficult times</p>
+            </div>
+            <div class="user-card">
+                <div class="user-icon">🌍</div>
+                <h4>Everyone</h4>
+                <p>Breaking barriers to knowledge and opportunity</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why It's Important Section -->
+    <section class="container fade-in">
+        <h2>🌱 Why Is the Ideas Box Important?</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🚫</div>
+                <h3>Reduces Lack of Education</h3>
+                <p>Addresses educational inequality by providing learning resources where they're needed most.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🗺️</div>
+                <h3>Brings Knowledge Everywhere</h3>
+                <p>Delivers education to places where schools don't exist or are unreachable.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💡</div>
+                <h3>Encourages Innovation</h3>
+                <p>Fosters creativity and creative thinking in communities that might otherwise lack these opportunities.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🖥️</div>
+                <h3>Supports Digital Skills</h3>
+                <p>Teaches technology skills essential for modern employment and global participation.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌟</div>
+                <h3>Builds Better Futures</h3>
+                <p>Empowers people to break cycles of poverty and build prosperous, informed communities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example Section -->
+    <section id="example" class="container fade-in">
+        <h2>🏫 How Is the Ideas Box Used?</h2>
+        <div class="example-timeline">
+            <div class="timeline-item">
+                <h3>📚 Rural School Library</h3>
+                <p>A school in a remote area uses Ideas Box as a library, providing students with books and digital resources they would never have access to otherwise.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>🏕️ Refugee Camp</h3>
+                <p>Children in a refugee camp use Ideas Box for education, helping them continue their studies despite displacement and difficult circumstances.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>💻 Youth Skills Center</h3>
+                <p>Young people learn computer and digital skills through Ideas Box, preparing them for modern job opportunities and digital literacy.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>🤝 Community Hub</h3>
+                <p>The community gathers at Ideas Box for training, meetings, and collaborative learning, becoming a center for knowledge and innovation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section container fade-in">
+        <h2>Join the Ideas Box Movement</h2>
+        <p>Help bring education, innovation, and opportunity to communities that need it most</p>
+        <button class="btn-primary"
+            onclick="window.open('file:///C:/Users/Nkurunziza%20Eric/Desktop/idea%20projects/join.html', '_blank')">
+            Get Involved
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Ideas Box Project. Bringing learning and innovation to communities worldwide. 🌍</p>
+        <p>Created with ❤️ for global education and opportunity</p>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved theme preference or default to light mode
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️ Light';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            themeToggle.textContent = isDarkMode ? '☀️ Light' : '🌙 Dark';
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        });
+
+        // Intersection Observer for Fade-in Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+            } else {
+                header.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Mobile menu toggle (for smaller screens)
+        let scrollPos = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                header.style.top = '0';
+            } else if (currentScroll > scrollPos) {
+                header.style.top = '-100px';
+                header.style.transition = 'top 0.3s ease';
+            } else {
+                header.style.top = '0';
+                header.style.transition = 'top 0.3s ease';
+            }
+            scrollPos = currentScroll;
+        });
+
+        // Counter Animation for Statistics (optional enhancement)
+        function animateCounter(element, target, duration = 1000) {
+            let current = 0;
+            const increment = target / (duration / 16);
+            
+            const counter = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(counter);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Add click feedback to buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Prevent link behavior for scroll anchors
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.getAttribute('href') === '#') {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Log page load
+        console.log('Ideas Box Project Loaded Successfully! 🎉');
+    </script>
+</body>
+</html>
